@@ -39,6 +39,12 @@ module Engine
             desc: 'Ensure that Boomtown, Little Miami, and Chesapeake & Ohio Railroad are not removed during setup.',
             players: [2, 3, 4, 5],
           },
+          {
+            sym: :chicago_divide,
+            short_name: 'Chicago Divide',
+            desc: 'Block and Rework',
+            players: [2, 3, 4, 5],
+          },
         ].freeze
 
         MUTEX_RULES = [
