@@ -111,7 +111,7 @@ module Engine
           '611' => 4,
           '619' => 3,
         }.freeze
-
+        
         LOCATION_NAMES = {
           'B8' => 'Holland',
           'B16' => 'Port Huron',
@@ -146,9 +146,22 @@ module Engine
           'K3' => 'Cairo',
         }.freeze
 
+        HEXES_CHICAGO_BLOCKER = {
+          white: {
+            ['D8'] => 'border=edge:0,type:impassable',
+            ['E7'] => 'border=edge:3,type:impassable',
+          },
+        }.freeze
+
+        HEXES_CHICAGO_DEFAULT = {
+          white: {
+            %w[E7 D8] => '',
+          },
+        }.freeze
+
         HEXES = {
           white: {
-            %w[B14 C11 C13 D8 D10 D12 E7 E9 E13 E15 F4 F8 F10 F12 G11 H2 H4 H8
+            %w[B14 C11 C13 D10 D12 E9 E13 E15 F4 F8 F10 F12 G11 H2 H4 H8
                H10 I3 I7 I9 J8 D18 B10 B12 F14 F16] => '',
             ['E19'] => 'border=edge:5,type:mountain,cost:40',
             %w[E5 F6 G5 H6] => 'icon=image:1846/ic',

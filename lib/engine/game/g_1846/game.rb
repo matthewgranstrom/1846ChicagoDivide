@@ -240,6 +240,22 @@ module Engine
         def corporation_opts
           two_player? ? { max_ownership_percent: 70 } : {}
         end
+        
+        def optional_hexes
+          if chicago_divide?
+            hexes_to_add = self.class::HEXES_CHICAGO_BLOCKER.dup
+          else
+            hexes_to_add = self.class::HEXES_CHICAGO_DEFAULT.dup
+          end
+          merged_map = HEXES.dup.merge(hexes_to_add) do |key, old_val, new_val|
+            if key == :white
+              old_val.merge(new_val)
+            else
+              new_val
+            end
+          end
+          merged_map
+        end
 
         def init_companies(players)
           companies = super
@@ -280,6 +296,12 @@ module Engine
           if first_edition?
             remove_icons(self.class::BOOMTOWN_HEXES, self.class::ABILITY_ICONS['BT'])
             remove_icons(self.class::LITTLE_MIAMI_HEXES, self.class::ABILITY_ICONS['LM'])
+          end
+
+          if chicago_divide?
+            @log << "CD variant -- attempting to modify C&WI private"
+          else
+            @log << "Restoring C&WI private"
           end
 
           remove_from_group!(orange_group, @companies) do |company|
@@ -336,6 +358,10 @@ module Engine
 
         def first_edition?
           @first_edition ||= @optional_rules.include?(:first_ed)
+        end
+
+        def chicago_divide?
+          @chicago_divide ||= @optional_rules.include?(:chicago_divide)
         end
 
         def setup_turn
